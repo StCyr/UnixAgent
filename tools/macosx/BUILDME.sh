@@ -41,7 +41,7 @@ cp ./build/UninstalledProducts/ocscontact ./build/UninstalledProducts/OCSNG.app/
 cp -R ./build/UninstalledProducts/OCSNG.app ../
 xcodebuild clean
 cd ../
-mkdir $OCSNG_PATH/Contents/Resources/lib
+mkdir -p $OCSNG_PATH/Contents/Resources/lib
 
 echo "Buidling unified source"
 cd ../../
