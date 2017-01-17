@@ -29,23 +29,24 @@
 
 - (void)didEnterPane:(InstallerSectionDirection)dir {
 	NSAlert *cfgFileExistsWrn;
-	NSString *tmpPath = @"/tmp/ocs_installer";
+    NSString *tmpPath = @"/tmp/ocs_installer/";
+    NSURL *tmpPathURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%s%@", "file://", tmpPath]];
 	
 	filemgr = [ NSFileManager defaultManager];
-	tmpCfgFilePath = @"/tmp/ocs_installer/ocsinventory-agent.cfg";
-	tmpModulesFilePath = @"/tmp/ocs_installer/modules.conf";
-	tmpServerdirFilePath = @"/tmp/ocs_installer/serverdir";
-	tmpCacertFilePath = @"/tmp/ocs_installer/cacert.pem";
+	NSURL *tmpCfgFilePath = [NSURL fileURLWithPath:@"file:///tmp/ocs_installer/ocsinventory-agent.cfg"];
+	NSURL *tmpModulesFilePath = [NSURL fileURLWithPath:@"file:///tmp/ocs_installer/modules.conf" ];
+	NSURL *tmpServerdirFilePath = [NSURL fileURLWithPath:@"file:///tmp/ocs_installer/serverdir" ];
+	NSURL *tmpCacertFilePath = [NSURL fileURLWithPath:@"file:///tmp/ocs_installer/cacert.pem" ];
 	
 	//Checking if temp directory exists
 	if ([filemgr fileExistsAtPath:tmpPath]) {
-		[filemgr removeFileAtPath:tmpCfgFilePath handler:nil];
-		[filemgr removeFileAtPath:tmpModulesFilePath handler:nil];
-		[filemgr removeFileAtPath:tmpServerdirFilePath handler:nil];
-		[filemgr removeFileAtPath:tmpCacertFilePath handler:nil];
+		[filemgr removeItemAtURL:tmpCfgFilePath error:nil];
+		[filemgr removeItemAtURL:tmpModulesFilePath error:nil];
+		[filemgr removeItemAtURL:tmpServerdirFilePath error:nil];
+		[filemgr removeItemAtURL:tmpCacertFilePath error:nil];
 		
 	} else {
-		[filemgr createDirectoryAtPath:tmpPath attributes:nil];
+        [filemgr createDirectoryAtURL:tmpPathURL withIntermediateDirectories:YES attributes:nil error:nil];
 		
 	}	
 	
